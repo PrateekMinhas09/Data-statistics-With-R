@@ -2,7 +2,9 @@
 title: "statistical Learning"
 author: "ISLR- Done by Prateek Minhas"
 date: "2025-10-18"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
