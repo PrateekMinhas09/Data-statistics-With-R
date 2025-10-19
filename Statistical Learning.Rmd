@@ -9,13 +9,14 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
-# Ch-2: Statistical Learning 
+# Ch-2: Statistical Learning
 
 ## Lab
 
-### Basic commands 
+### Basic commands
 
 ```{r}
 x=c(1,3,4,5)
@@ -170,3 +171,91 @@ dim(A)
 ```
 
 ### Loading Data
+
+```{r}
+Auto = read.table("Auto.data")
+#View(Auto)
+head(Auto)
+```
+
+```{r}
+Auto = read.table("Auto.data", na.strings = "?", header = T , stringsAsFactors = T )
+head(Auto)
+```
+
+```{r}
+Auto = read.csv("Auto.csv", na.strings = "?", stringsAsFactors = T)
+attach(Auto)
+head(Auto)
+```
+
+the strings as factors argument tells that if the value is string , treat the variable as qualitative
+
+```{r}
+dim(Auto)
+```
+
+```{r}
+Auto[1:4,]
+```
+
+```{r}
+Auto= na.omit(Auto)
+dim(Auto) #as we see number of rows are reduced
+```
+
+```{r}
+names(Auto)
+```
+
+#### Additional graphical and numerical Summaries 
+
+```{r}
+
+plot(cylinders,mpg)
+#the cylinders is quantitative
+```
+
+The **as.factor() function converts quantitative variables into qualitative** variables.
+
+```{r}
+cylinders= as.factor(cylinders)
+```
+
+***If the variable plotted on the x-axis is qualitative, then boxplots will automatically be produced by the plot() function.***
+
+```{r}
+plot(cylinders, mpg , xlab="cylinderas(qual)", ylab="mpg", col="red", varwidth=T, horizontal=F)
+```
+
+```{r}
+hist(mpg)
+hist(mpg, col=2)
+hist(mpg,col=0, breaks=15)
+```
+
+The **pairs()** function creates a scatterplotmatrix, i.e. a scatterplot for every pair of variables.
+
+```{r}
+pairs(Auto)
+pairs(~mpg + displacement + cylinders + acceleration, data=Auto)
+```
+
+```{r}
+#windows()
+plot(horsepower,mpg, col=12)
+#identify(horsepower, mpg , name)
+
+```
+
+Use windows() to run the identify interactive function
+
+```{r}
+summary(Auto)
+```
+
+```{r}
+summary(displacement)
+```
+
+## APPLIED EXERCISE
