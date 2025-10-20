@@ -307,7 +307,7 @@ plot(Private, Outstate)
 
 *Here we can see that in average Private Institutes have more out of state tuition*
 
-iv. Create a new qualitative variable, called Elite, by binning the Top10perc variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
+**iv.** Create a new qualitative variable, called Elite, by binning the Top10perc variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10% of their high school classes exceeds 50%.
 
 ```{r}
 if (!("Elite" %in% colnames(college))) {
@@ -331,3 +331,57 @@ plot(Elite,Outstate, col=12)
 ```
 
 *So in average elite people have more out of state tuition*
+
+**v.** Use the hist() function to produce some histograms with differing numbers of bins for a few of the quantitative variables. You may find the command par(mfrow = c(2, 2)) useful: it will divide the print window into four regions so that four plots can be made simultaneously. Modifying the arguments to this function will divide the screen in other ways.
+
+```{r}
+par(mfrow=c(2,2))
+hist(Top10perc)
+hist(Top10perc, breaks = 15)
+hist(Outstate)
+hist(Outstate, breaks=15)
+```
+
+**vi. Continue exploring the data, and provide a brief summary of what you discover.**
+
+**9.** This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
+**(a)** Which of the predictors are quantitative, and which are qualitative?
+
+```{r}
+head(Auto)
+Auto= na.omit(Auto)
+
+```
+
+*Quantitative- mpg, cylinders, displacement, horsepower, weight, acceleration,*
+
+*Qualitative - Year, Origin, name*
+
+(b) What is the range of each quantitative predictor? You can answer this using the range() function.
+
+```{r}
+cylinders= as.numeric(as.character(cylinders))
+range(mpg)
+range(cylinders)
+range(displacement)
+range(horsepower, na.rm=T)
+range(weight)
+range(acceleration)
+```
+
+(c) What is the mean and standard deviation of each quantitative predictor?
+
+```{r}
+cat("MPG Mean:", mean(mpg), "\n")
+cat("MPG SD:", sd(mpg), "\n")
+cat("displacement Mean:", mean(displacement), "\n")
+cat("displacement SD:", sd(displacement), "\n")
+cat("weight Mean:", mean(weight), "\n")
+cat("weight SD:", sd(weight), "\n")
+cat("horsepower Mean:", mean(horsepower), "\n")
+cat("horsepower SD:", sd(horsepower), "\n")
+cat("acceleration Mean:", mean(acceleration), "\n")
+cat("acceleration SD:", sd(acceleration), "\n")
+```
+
+(d) Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
