@@ -344,8 +344,7 @@ hist(Outstate, breaks=15)
 
 **vi. Continue exploring the data, and provide a brief summary of what you discover.**
 
-**9.** This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.
-**(a)** Which of the predictors are quantitative, and which are qualitative?
+**9.** This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data. **(a)** Which of the predictors are quantitative, and which are qualitative?
 
 ```{r}
 head(Auto)
@@ -384,4 +383,59 @@ cat("acceleration Mean:", mean(acceleration), "\n")
 cat("acceleration SD:", sd(acceleration), "\n")
 ```
 
-(d) Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?
+(d) Now remove the 10th through 85th observations. What is the mean, and standard deviation of each predictor in the subset of the data that remains?
+
+```{r}
+Autosubset = Auto[-c(10:84),]
+```
+
+```{r}
+with(Autosubset,{
+cat("MPG Mean:", mean(mpg), "\n")
+cat("MPG SD:", sd(mpg), "\n")
+cat("displacement Mean:", mean(displacement), "\n")
+cat("displacement SD:", sd(displacement), "\n")
+cat("weight Mean:", mean(weight), "\n")
+cat("weight SD:", sd(weight), "\n")
+cat("horsepower Mean:", mean(horsepower), "\n")
+cat("horsepower SD:", sd(horsepower), "\n")
+cat("acceleration Mean:", mean(acceleration), "\n")
+cat("acceleration SD:", sd(acceleration), "\n")})
+```
+
+**e),f)** are similar - Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer.
+
+```{r}
+colnames(Auto)
+```
+
+```{r}
+plot(~mpg + displacement + horsepower + weight + acceleration)
+```
+
+*we can see mpg is linearly corelated with displacement , horsepower and weight ; so these can be used as predictors for mpg , checking for corelation values*
+
+```{r}
+Auto$horsepower[Auto$horsepower == "?"] <- NA
+Auto$horsepower <- as.numeric(Auto$horsepower)
+Auto <- na.omit(Auto)
+with(Auto, {
+  cat("mpg vs displacement:", cor(mpg, displacement), "\n")
+  cat("mpg vs horsepower:",  cor(mpg, horsepower), "\n")
+  cat("mpg vs weight:",      cor(mpg, weight), "\n")
+  cat("mpg vs acceleration:", cor(mpg, acceleration), "\n")
+})
+```
+
+*as we can see apart from acceleration , rest all have high correlation values*
+
+```{r}
+with(Auto,{
+  cylinders= as.factor(cylinders)
+  year= as.factor(year)
+  origin= as.factor(origin)
+  plot(cylinders,mpg)
+  plot(origin,mpg)
+  plot(year,mpg)})
+
+```
