@@ -9,6 +9,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+ 
 
 ```
 
@@ -446,12 +447,12 @@ with(Auto,{
 
 *Lastly, the third plot of year vs mpg showcases that cars manufactured later in the 80s are more efficient and have high mpg than earlier manufactured cars.*
 
-**10.** This exercise involves the Boston housing data set.
-**(a)** To begin, load in the Boston data set. The Boston data set is part of the ISLR2 library.
+**10.** This exercise involves the Boston housing data set. **(a)** To begin, load in the Boston data set. The Boston data set is part of the ISLR2 library.
 
 ```{r}
 if (!requireNamespace("ISLR2", quietly = TRUE)) {
   install.packages("ISLR2")
+ 
 }
 library(ISLR2)
 ```
@@ -539,3 +540,75 @@ cor_matrix>0.7
 ```
 
 *as we see from the first row , crim does not have a single strong correlation with any other predictor*
+
+**(d)** Do any of the census tracts of Boston appear to have particularly high crime rates? Tax rates? Pupil teacher ratios? Comment on the range of each predictor.
+
+```{r}
+with(Boston, {
+  print(range(crim))
+  print(range(tax))
+  print(range(ptratio))})
+
+```
+
+***Crime rate (`crim`)**: ranges from **0.006 to 88.98** — very wide!\
+→ Some tracts have **extremely high crime**, while others have almost none.\
+→ Indicates large inequality across neighborhoods.*
+
+***Tax rate (`tax`)**: ranges from **187 to 711** — wide variation.\
+→ Some areas pay nearly 4× higher taxes than others.*
+
+***Pupil–teacher ratio (`ptratio`)**: ranges from **12.6 to 22.0**.\
+→ Less variation, but still meaningful — suggests differences in school quality between tracts.*
+
+**(e)** How many of the census tracts in this data set bound the Charles river?
+
+```{r}
+table(Boston$chas)
+```
+
+*35 houses are bound with Charles river*
+
+**(f)** What is the median pupil-teacher ratio among the towns in this data set?
+
+```{r}
+median(Boston$ptratio)
+```
+
+*middle value is 19.05, half are lower and half are higher.*
+
+**(g)** Which census tract of Boston has lowest median value of owner occupied homes? What are the values of the other predictors for that census tract, and how do those values compare to the overall ranges for those predictors? Comment on your findings.
+
+```{r}
+Boston[which.min(Boston$medv), ]
+
+```
+
+*With a median value of 5000 usd, the crime rate seems pretty higher than the usual average of 3, the house is not river bound and has 18.1 acres of non- rental business land. The nitrogen levels are higher than average as well, it has an average of 5 bedrooms per dwelling.*
+
+**(h)** In this data set, how many of the census tracts average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the census tracts that average more than eight rooms per dwelling.
+
+```{r}
+print(sum(Boston$rm>7))
+print(sum(Boston$rm>8))
+```
+
+64 census tracts are \> 7
+
+13 are grater than 8
+
+```{r}
+if (!require(MASS)) install.packages("MASS", repos = "https://cloud.r-project.org/")
+if (!require(psych)) install.packages("psych", repos = "https://cloud.r-project.org/")
+
+library(MASS)    # Boston dataset
+library(psych)   # describe() function
+
+# --- Create subsets ---
+Bost7 <- Boston[Boston$rm > 7, ]
+Bost8 <- Boston[Boston$rm > 8, ]
+
+# --- Neat descriptive summaries ---
+describe(Bost7)
+describe(Bost8)
+```
